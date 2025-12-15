@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artifex Education - Propuesta Robótica Educativa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de colores y fuentes */
+        :root {
+            --primary-color: #1a365d; /* Azul oscuro */
+            --secondary-color: #f97316; /* Naranja */
+            --accent-color: #0ea5e9; /* Azul claro */
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --gray-color: #64748b;
+            --success-color: #10b981;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Estilos del login */
+        #login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 20px;
+        }
+
+        .login-box {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .logo-login {
+            max-width: 200px;
+            margin: 0 auto 30px;
+        }
+
+        .logo-login img {
+            width: 100%;
+            height: auto;
+        }
+
+        .login-box h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .login-box p {
+            color: var(--gray-color);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #ea580c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(249, 115, 22, 0.2);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .error-message {
+            color: #ef4444;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+        }
+
+        /* Estilos del contenido principal */
+        #main-content {
+            display: none;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo-header img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logout-btn {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 54, 93, 0.9), rgba(26, 54, 93, 0.9)), url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            text-align: left;
+        }
+
+        .hero .btn {
+            text-align: center;
+        }
+
+        /* Secciones */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .section-title h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            bottom: -10px;
+            left: 0;
+            transform: none;
+        }
+
+        .section-title p {
+            color: var(--gray-color);
+            max-width: 100%;
+            margin: 20px 0 0;
+            text-align: left;
+        }
+
+        /* Cards */
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            text-align: left;
+        }
+
+        .card h3 i {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+
+        /* Listas */
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+            text-align: left;
+        }
+
+        ul li:before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            position: absolute;
+            left: -10px;
+        }
+
+        /* Tabla de inversión */
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .investment-table th,
+        .investment-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .investment-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .investment-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .investment-table tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        .investment-table .total-row {
+            background-color: #fef3c7;
+            font-weight: 600;
+        }
+
+        /* Modelo de negocio */
+        .business-model {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .model-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            border-top: 4px solid var(--secondary-color);
+            text-align: left;
+        }
+
+        .model-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            text-align: left;
+        }
+
+        .vigencia-nota {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: var(--border-radius);
+            text-align: left;
+        }
+
+        .vigencia-nota h5 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .extracurricular-info {
+            background-color: #fef3c7;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: var(--border-radius);
+            text-align: left;
+        }
+
+        .extracurricular-info h5 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Hoja de vida */
+        .resume-card {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .resume-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        .resume-item {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .resume-item h5 {
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+            text-align: left;
+        }
+
+        .resume-item .date {
+            color: var(--gray-color);
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        /* Enlaces */
+        .link-box {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            margin: 10px 10px 10px 0;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .link-box:hover {
+            background-color: #e2e8f0;
+            color: var(--accent-color);
+        }
+
+        .link-box i {
+            margin-right: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            text-align: left;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+            margin-bottom: 15px;
+        }
+
+        .footer-info h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            text-align: left;
+        }
+
+        .contact-info p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+                text-align: left;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                text-align: left;
+            }
+            
+            .section-title h2 {
+                font-size: 1.7rem;
+                text-align: left;
+            }
+            
+            .section-title h2::after {
+                left: 0;
+            }
+            
+            .business-model {
+                flex-direction: column;
+            }
+            
+            .login-box {
+                padding: 30px 20px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor de login -->
+    <div id="login-container">
+        <div class="login-box">
+            <div class="logo-login">
+                <img src="https://res.cloudinary.com/dndqz36tv/image/upload/v1765239380/ARTIFEX_naranja-azul_ufp5ss.png" alt="Artifex Education Logo">
+            </div>
+            <h2>Acceso a la Propuesta</h2>
+            <p>Ingrese la contraseña proporcionada para acceder a la propuesta de implementación de robótica educativa.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingrese la contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-block">Acceder a la Propuesta</button>
+                <div id="error-message" class="error-message">Contraseña incorrecta. Intente nuevamente.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenido principal (oculto inicialmente) -->
+    <div id="main-content">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-header">
+                        <img src="https://res.cloudinary.com/dndqz36tv/image/upload/v1765239365/ARTIFEX_Negro_yoosxv.png" alt="Artifex Logo">
+                    </div>
+                    <button id="logout-button" class="btn logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Propuesta de Implementación de Robótica Educativa</h1>
+                <p>Para el Colegio Pinar del Prado, Barranquilla</p>
+                <p><strong>Rectora:</strong> Mg. Sulma Robayo</p>
+                <a href="#contacto" class="btn">Contactar</a>
+            </div>
+        </section>
+
+        <!-- Introducción -->
+        <section id="introduccion">
+            <div class="container">
+                <div class="section-title">
+                    <h2>1. Introducción</h2>
+                    <p>Propuesta integral para el desarrollo de competencias del siglo XXI a través de la robótica educativa</p>
+                </div>
+                <div class="card">
+                    <p>Esta propuesta presenta el diseño, implementación y acompañamiento integral de un Programa de Robótica Educativa para el colegio <strong>Pinar del Prado</strong> en la ciudad de Barranquilla, Colombia, dirigido a los grados desde preescolar hasta once (8°). El proyecto integra currículo, competencias, clases, laboratorio, capacitación docente y una plataforma digital de gestión académica especializada.</p>
+                    <p>El programa se basa en metodologías pedagógicas activas que fomentan el aprendizaje por descubrimiento, el trabajo colaborativo y el desarrollo del pensamiento computacional, preparando a los estudiantes para los desafíos del mundo actual y futuro.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alcance del Servicio -->
+        <section id="alcance">
+            <div class="container">
+                <div class="section-title">
+                    <h2>2. Alcance del Servicio</h2>
+                    <p>Componentes integrales del programa de robótica educativa</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-cogs"></i> Elementos del Programa</h3>
+                    <ul>
+                        <li>Diseño completo del plan de estudios por grado</li>
+                        <li>Definición de competencias y desempeños de comprensión</li>
+                        <li>Diseño del aula/laboratorio de robótica</li>
+                        <li>Asesoría completa para compra de equipos</li>
+                        <li>Licencia anual para el uso de la plataforma digital de gestión académica LUDENS</li>
+                        <li>Capacitación docente especializada</li>
+                        <li>Acompañamiento pedagógico anual</li>
+                    </ul>
+                    <p>La plataforma <strong>LUDENS</strong> incluye todas las clases, proyectos y actividades de la cátedra, organizadas por grado y período académico, facilitando la gestión y seguimiento del proceso educativo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plataforma LUDENS -->
+        <section id="plataforma">
+            <div class="container">
+                <div class="section-title">
+                    <h2>3. Plataforma Digital LUDENS</h2>
+                    <p>Herramienta central de gestión académica del programa</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-laptop-code"></i> Acceso a la Plataforma</h3>
+                    <p>La plataforma de gestión académica del proyecto es <strong>LUDENS</strong>, propiedad de Artifex, y será la herramienta digital desde la cual se gestionan todas las clases, proyectos, equipos, asistencia y monitoreo de avances.</p>
+                    
+                    <p><strong>Acceso:</strong> <a href="https://ludenseducation.com" target="_blank" class="link-box"><i class="fas fa-external-link-alt"></i> https://ludenseducation.com</a></p>
+                    
+                    <h4>Credenciales de demostración:</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0;">
+                        <div style="flex: 1; min-width: 250px;">
+                            <h5>Perfil Estudiante</h5>
+                            <p><strong>Usuario:</strong> GB001</p>
+                            <p><strong>Contraseña:</strong> 12345678</p>
+                            <p><em>Vigencia: 30 días</em></p>
+                            <a href="https://youtu.be/XKK8VzqUXU8" target="_blank" class="link-box"><i class="fab fa-youtube"></i> Video Tutorial</a>
+                        </div>
+                        <div style="flex: 1; min-width: 250px;">
+                            <h5>Perfil Docente</h5>
+                            <p><strong>Usuario:</strong> 12345678</p>
+                            <p><strong>Contraseña:</strong> 123456</p>
+                            <a href="https://www.youtube.com/watch?v=wIZ6gqFO32w" target="_blank" class="link-box"><i class="fab fa-youtube"></i> Video Tutorial</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plan de Área -->
+        <section id="plan-area">
+            <div class="container">
+                <div class="section-title">
+                    <h2>4. Plan de Área</h2>
+                    <p>Estructura curricular y lineamientos pedagógicos</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-map"></i> Carta de Navegación Institucional</h3>
+                    <p>El plan de área es un componente estructural del servicio que ofrece Artifex. Este documento se convierte en la carta de navegación institucional alrededor de la cátedra de robótica educativa.</p>
+                    
+                    <p>A continuación puede visualizar un ejemplo para grado sexto de la estructura y los lineamientos que se siguen para este documento:</p>
+                    
+                    <a href="https://drive.google.com/file/d/1bMoxeKAV8ib2WKJw2NQ_TTK3nomXoMpE/view?usp=drive_link" target="_blank" class="link-box"><i class="fas fa-external-link-alt"></i> Ver ejemplo de Plan de Área - Grado 6°</a>
+                    
+                    <p style="margin-top: 20px;">El plan incluye objetivos de aprendizaje, competencias a desarrollar, metodología, evaluación, recursos y cronograma detallado para cada grado.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Desglose de Inversión -->
+        <section id="inversion">
+            <div class="container">
+                <div class="section-title">
+                    <h2>5. Desglose de Inversión</h2>
+                    <p>Inversión anual para la implementación completa del programa</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-chart-pie"></i> Detalle de Costos</h3>
+                    <table class="investment-table">
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Descripción</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Diseño Curricular Completo</strong></td>
+                                <td>9 grados, 3 proyectos anuales por grado, 30 clases anuales por grado, integrado a LUDENS y en versión PDF</td>
+                                <td>$5.000.000 COP</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Diseño de Laboratorio y Asesoría</strong></td>
+                                <td>Asesoría de compras de recursos pedagógicos para robótica electrónica y estructural</td>
+                                <td>$1.500.000 COP</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Licencia Plataforma Digital LUDENS</strong></td>
+                                <td>Licencia anual para acceso a la plataforma de gestión académica</td>
+                                <td>$1.500.000 COP</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Capacitación Docente</strong></td>
+                                <td>Formación especializada en metodología y uso de la plataforma</td>
+                                <td>$2.000.000 COP</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="2"><strong>TOTAL INVERSIÓN ANUAL</strong></td>
+                                <td><strong>$10.000.000 COP</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modelo de Negocio -->
+        <section id="modelo-negocio">
+            <div class="container">
+                <div class="section-title">
+                    <h2>6. Modelo de Negocio</h2>
+                    <p>Estructura de pagos para la implementación del programa</p>
+                </div>
+                <div class="card">
+                    <div class="business-model">
+                        <div class="model-card">
+                            <h4><i class="fas fa-file-signature"></i> Pago Inicial</h4>
+                            <p><strong>Valor:</strong> $7.000.000 COP</p>
+                            <p><strong>Concepto:</strong> Diseño Curricular Completo + Capacitación Docente</p>
+                            <p><strong>Ejecución:</strong> A la firma del contrato</p>
+                        </div>
+                        <div class="model-card">
+                            <h4><i class="fas fa-calendar-alt"></i> Pago Recurrente</h4>
+                            <p><strong>Valor total:</strong> $3.000.000 COP</p>
+                            <p><strong>Concepto:</strong> Plataforma digital + acompañamiento pedagógico mensual + asesoría en compra de materiales</p>
+                            <p><strong>Ejecución:</strong> 10 cuotas mensuales de $300.000 COP</p>
+                        </div>
+                    </div>
+                    
+                    <div class="vigencia-nota">
+                        <h5><i class="fas fa-clock"></i> Vigencia de la Propuesta</h5>
+                        <p>La presente propuesta tiene una vigencia de <strong>30 días</strong> a partir de la fecha de su presentación.</p>
+                    </div>
+                    
+                    <div class="extracurricular-info">
+                        <h5><i class="fas fa-graduation-cap"></i> Implementación como Curso Extracurricular</h5>
+                        <p>En el caso de implementación como curso extracurricular, el valor del currículo con las clases y el proyecto FLL (First Lego League) tiene un <strong>costo adicional de $3.000.000 COP</strong>.</p>
+                        <p>Este paquete incluye: currículo especializado para actividades extracurriculares, preparación para competencias FLL, entrenamiento específico para torneos y materiales adicionales para proyectos especiales.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hoja de Vida -->
+        <section id="hoja-vida">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Director del Proyecto</h2>
+                    <p>Hansel Peña Díaz - Experiencia y trayectoria profesional</p>
+                </div>
+                <div class="card resume-card">
+                    <div class="resume-section">
+                        <h4><i class="fas fa-user-graduate"></i> Perfil Profesional</h4>
+                        <p>Soy un docente con más de 25 años de experiencia en el quehacer pedagógico y académico, con práctica en la aplicación de modelos pedagógicos de enseñanza para la comprensión y el modelo pedagógico de Bachillerato Internacional (IB). Soy experto en la aplicación de la metodología de aprendizaje basada en proyectos. He creado currículos STEAM y de robótica educativa adaptando el enfoque SKAPERSKOLEN del gobierno de Noruega.</p>
+                        <p>Me considero una persona creativa, investigadora y líder, apasionado por la inteligencia artificial, las habilidades del pensamiento, las competencias del siglo XXI, la pedagogía activa y el uso de las TIC como herramientas de apoyo pedagógico.</p>
+                    </div>
+                    
+                    <div class="resume-section">
+                        <h4><i class="fas fa-briefcase"></i> Experiencia Laboral Relevante</h4>
+                        
+                        <div class="resume-item">
+                            <h5>Neil Armstrong School - Villavicencio, Meta</h5>
+                            <div class="date">2012 - 2023</div>
+                            <p><strong>Funciones:</strong> Jefe de Área STEAM, Robótica, Emprendimiento, Tecnología e Informática. Docente de STEAM, Robótica, Programación, ITGS (IB), Ciudadanía Digital (IB). Head Coach del equipo de robótica por más de 7 años.</p>
+                            <p><strong>Logros:</strong> Creación del currículo STEAM y robótica adaptado del enfoque SKAPERSKOLEN. Director del equipo de robótica que obtuvo campeonatos nacionales (2017, 2018) e internacionales (2019 en Fairmont, EE.UU.), segundo puesto en Open de Uruguay y Brasil (2022).</p>
+                        </div>
+                        
+                        <div class="resume-item">
+                            <h5>Coach de Robótica Educativa - Seminario Diocesano Cristo Sacerdote</h5>
+                            <div class="date">Actualidad</div>
+                            <p>Coach del equipo de robótica educativa del Seminario Diocesano Cristo Sacerdote de Palmira, Valle del Cauca.</p>
+                        </div>
+                        
+                        <div class="resume-item">
+                            <h5>Diseñador y Director de Cátedra - Robótica + Pensamiento Computacional + STEAM</h5>
+                            <div class="date">Actualidad</div>
+                            <p>Diseñador y director de la cátedra de robótica + pensamiento computacional + STEAM con metodología de aprendizaje basado en proyectos. La cátedra culmina cada año con la Feria STEAM, evento municipal que convoca a todos los colegios asociados a CONACED.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="resume-section">
+                        <h4><i class="fas fa-chalkboard-teacher"></i> Conferencias y Cursos Dictados</h4>
+                        
+                        <div class="resume-item">
+                            <h5>Conferencias en Inteligencia Artificial - Empresa Ecotank</h5>
+                            <p>Conferencias sobre inteligencia artificial aplicada a la educación, dictadas para la empresa Ecotank de Palmira, Valle del Cauca.</p>
+                        </div>
+                        
+                        <div class="resume-item">
+                            <h5>Curso "Emprende Smart" - Inteligencia Artificial para Emprendedores</h5>
+                            <p>Curso de inteligencia artificial para emprendedores dictado para la Alcaldía de Pradera, Valle del Cauca.</p>
+                        </div>
+                        
+                        <div class="resume-item">
+                            <h5>Otras Conferencias Destacadas</h5>
+                            <p>"Herramientas TIC para los nuevos docentes virtuales" - Ministerio de Educación Nacional.</p>
+                            <p>"De últimos nacionales a campeones internacionales" - Corporación Minuto de Dios.</p>
+                            <p>"Inteligencia Artificial, Diario Docente" - Investigación sobre aplicación de IA en educación.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="resume-section">
+                        <h4><i class="fas fa-graduation-cap"></i> Educación y Certificaciones</h4>
+                        <ul>
+                            <li>Estudios en Ingeniería de Sistemas - Universidad del Valle</li>
+                            <li>Nivel 1 ITGS Bachillerato Internacional - Cambridge School, Costa Rica</li>
+                            <li>Nivel 1 Ciudadanía Digital Bachillerato Internacional - IBO</li>
+                            <li>Nivel B1 Cambridge English Language Assessment</li>
+                            <li>LEGO Education Academy - Desarrollo de habilidades del pensamiento</li>
+                            <li>Estrategias didácticas de pedagogía conceptual - Fundación Alberto Merani</li>
+                            <li>Uso educativo de Scratch - Universidad Icesi</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="resume-section">
+                        <h4><i class="fas fa-address-card"></i> Contacto</h4>
+                        <div class="contact-info">
+                            <p><i class="fas fa-envelope"></i> hanselpenadiaz@gmail.com</p>
+                            <p><i class="fas fa-phone"></i> 314 309 0748</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="contacto">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <div class="footer-logo">
+                            <img src="https://res.cloudinary.com/dndqz36tv/image/upload/v1765239393/ARTIFEX_Azul-Claro_t7dspd.png" alt="Artifex Logo Claro">
+                        </div>
+                        <h4>Artifex Education</h4>
+                        <p>Especialistas en implementación de programas STEAM y robótica educativa para instituciones educativas.</p>
+                    </div>
+                    <div class="footer-info">
+                        <h4>Contacto</h4>
+                        <div class="contact-info">
+                            <p><i class="fas fa-user"></i> Hansel Peña Díaz</p>
+                            <p><i class="fas fa-envelope"></i> hanselpenadiaz@gmail.com</p>
+                            <p><i class="fas fa-phone"></i> 314 309 0748</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Colombia</p>
+                        </div>
+                    </div>
+                    <div class="footer-info">
+                        <h4>Propuesta para</h4>
+                        <div class="contact-info">
+                            <p><i class="fas fa-school"></i> Colegio Pinar del Prado</p>
+                            <p><i class="fas fa-user-tie"></i> Rectora: Mg. Sulma Robayo</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Barranquilla, Colombia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 Artifex Education. Todos los derechos reservados. | Propuesta confidencial para Colegio Pinar del Prado | Vigencia: 30 días</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Contraseña para acceder a la propuesta
+        const PASSWORD = "cliente";
+        
+        // Elementos del DOM
+        const loginContainer = document.getElementById('login-container');
+        const mainContent = document.getElementById('main-content');
+        const loginForm = document.getElementById('login-form');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('error-message');
+        const logoutButton = document.getElementById('logout-button');
+        
+        // Verificar si ya está autenticado
+        document.addEventListener('DOMContentLoaded', function() {
+            const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+            
+            if (isAuthenticated) {
+                showMainContent();
+            }
+        });
+        
+        // Manejar el envío del formulario de login
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const enteredPassword = passwordInput.value.trim();
+            
+            if (enteredPassword === PASSWORD) {
+                // Guardar estado de autenticación
+                sessionStorage.setItem('authenticated', 'true');
+                showMainContent();
+                errorMessage.style.display = 'none';
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+        
+        // Manejar el logout
+        logoutButton.addEventListener('click', function() {
+            sessionStorage.removeItem('authenticated');
+            showLogin();
+        });
+        
+        // Función para mostrar el contenido principal
+        function showMainContent() {
+            loginContainer.style.display = 'none';
+            mainContent.style.display = 'block';
+            
+            // Desplazarse suavemente a la sección correspondiente si hay un hash en la URL
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+        }
+        
+        // Función para mostrar el login
+        function showLogin() {
+            loginContainer.style.display = 'flex';
+            mainContent.style.display = 'none';
+            passwordInput.value = '';
+            window.location.hash = '';
+        }
+        
+        // Manejar enlaces internos con desplazamiento suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href').substring(1);
+                
+                if (targetId === '') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Actualizar el hash en la URL sin desplazar la página
+                        window.history.pushState(null, null, `#${targetId}`);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
